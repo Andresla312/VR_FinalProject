@@ -1,0 +1,36 @@
+# Archivos y carpetas específicas de Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# Archivos de Visual Studio/JetBrains Rider
+.vs/
+*.suo
+*.user
+*.userprefs
+*.csproj
+*.pidb
+*.sln
+*.sln.metaproj
+*.sln.metaproj.tmp
+*.VC.db
+*.VC.VC.opendb
+
+# Configuración específica de Unity para usuarios individuales
+UserSettings/
+
+# Configuración de Paquetes
+Packages/packages-lock.json
+
+# Archivos generados por Meta Quest
+*.apk
+*.unitypackage
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
