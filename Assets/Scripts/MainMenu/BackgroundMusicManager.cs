@@ -72,21 +72,31 @@ public class BackgroundMusicManager : MonoBehaviour
     {
         string sceneName = SceneManager.GetActiveScene().name;
 
-        if (sceneName == "Tutorial")
+        switch (sceneName)
         {
-            PauseMainBackgroundMusic(); // Pausar música en la escena del videoclip
-        }
-        else if (sceneName == "DemoLevel")
-        {
-            ResumeMainBackgroundMusic(); // Reanudar música principal
-            PlayAdditionalSound(); // Reproducir el sonido adicional
-        }
-        else if (sceneName == "MainMenu")
-        {
-            if (!mainBackgroundSource.isPlaying)
-            {
+            case "Tutorial":
+                PauseMainBackgroundMusic(); // Pausar música en la escena del videoclip
+                break;
+
+            case "DemoLevel":
+                PlayMainBackgroundMusic(); // Reproducir música principal desde el inicio
+                PlayAdditionalSound(); // Reproducir el sonido adicional
+                break;
+
+            case "Win": 
                 PlayMainBackgroundMusic();
-            }
+                break;
+
+            case "GameOver":
+                PlayMainBackgroundMusic();
+                break;
+
+            case "MainMenu":
+                if (!mainBackgroundSource.isPlaying)
+                {
+                    PlayMainBackgroundMusic();
+                }
+                break;
         }
     }
 }

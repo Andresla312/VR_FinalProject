@@ -3,20 +3,42 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private AudioSource buttonClickSound; 
-    [SerializeField] private AudioClip buttonClickClip;
 
     public void PlayGame()
     {
-        PlayButtonClickSound();
-        SceneManager.LoadScene("Tutorial");
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        if (currentScene == "MainMenu")
+        {
+            SceneManager.LoadScene("Tutorial");
+        }
+        else if (currentScene == "GameOver")
+        {
+            SceneManager.LoadScene("DemoLevel");
+        }
+        else if (currentScene == "Win")
+        {
+            SceneManager.LoadScene("DemoLevel");
+        }
     }
 
     public void QuitGame()
     {
-        PlayButtonClickSound();
-        Debug.Log("Quit Game");
-        Application.Quit();
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        if (currentScene == "MainMenu")
+        {
+            Debug.Log("Quit Game");
+            Application.Quit();
+        }
+        else if (currentScene == "GameOver")
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+        else if (currentScene == "Win")
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 
     void Update()
@@ -29,14 +51,6 @@ public class MainMenu : MonoBehaviour
         if (OVRInput.GetDown(OVRInput.Button.Two))
         {
             QuitGame();
-        }
-    }
-
-    private void PlayButtonClickSound()
-    {
-        if (buttonClickSound != null && buttonClickClip != null)
-        {
-            buttonClickSound.PlayOneShot(buttonClickClip);
         }
     }
 }
