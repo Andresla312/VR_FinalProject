@@ -34,3 +34,6 @@ Packages/packages-lock.json
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Ignorar OculusRuntimeSettings.asset
+Assets/Resources/OculusRuntimeSettings.asset

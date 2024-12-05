@@ -4,14 +4,14 @@ using UnityEngine.SceneManagement;
 public class BackgroundMusicManager : MonoBehaviour
 {
     [SerializeField] private AudioSource backgroundMusicSource; // Referencia al AudioSource de la música de fondo
-    [SerializeField] private AudioClip additionalBackgroundSound; // Nuevo sonido adicional que se reproducirá en la tercera escena
+    [SerializeField] private AudioClip mainBackgroundMusic; // Canción de fondo principal
+    [SerializeField] private AudioClip additionalBackgroundSound; // Sonido adicional para la tercera escena
 
     private static BackgroundMusicManager instance;
-    private bool isMusicPlaying = false;
 
     void Awake()
     {
-        // Si ya existe un BackgroundMusicManager, destruir este objeto para evitar duplicados
+        // Evitar duplicados del BackgroundMusicManager
         if (instance != null)
         {
             Destroy(gameObject);
@@ -28,72 +28,47 @@ public class BackgroundMusicManager : MonoBehaviour
         // Iniciar la música solo si estamos en la escena del menú principal
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
-            PlayBackgroundMusic();
+            PlayMusic(mainBackgroundMusic);
         }
     }
 
-    // Método para reproducir música de fondo en la escena del menú
-    private void PlayBackgroundMusic()
+    // Método para reproducir música desde el inicio
+    private void PlayMusic(AudioClip clip)
     {
-        if (backgroundMusicSource != null && !backgroundMusicSource.isPlaying)
+        if (backgroundMusicSource != null)
         {
-            backgroundMusicSource.Play();
-            isMusicPlaying = true;
+            backgroundMusicSource.Stop(); // Detener cualquier música actual
+            backgroundMusicSource.clip = clip; // Asignar la nueva canción
+            backgroundMusicSource.Play(); // Reproducir desde el inicio
         }
     }
 
-    // Método para pausar la música
-    private void PauseBackgroundMusic()
-    {
-        if (backgroundMusicSource != null && backgroundMusicSource.isPlaying)
-        {
-            backgroundMusicSource.Pause();
-            isMusicPlaying = false;
-        }
-    }
-
-    // Método para reanudar la música
-    private void ResumeBackgroundMusic()
-    {
-        if (backgroundMusicSource != null && !backgroundMusicSource.isPlaying)
-        {
-            backgroundMusicSource.UnPause();
-            isMusicPlaying = true;
-        }
-    }
-
-    // Este método se llamará cuando se cambie de escena
+    // Este método se llama al cargar una nueva escena
     void OnLevelWasLoaded(int level)
     {
-        // Detener música en la escena del videoclip
-        if (SceneManager.GetActiveScene().name == "VideoclipScene")
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        if (currentSceneName == "Tutorial")
         {
-            PauseBackgroundMusic();
+            // Detener la música durante la escena del videoclip
+            backgroundMusicSource.Stop();
         }
-        // Reanudar la música en la tercera escena
-        else if (SceneManager.GetActiveScene().name == "ThirdScene")
+        else if (currentSceneName == "DemoLevel")
         {
-            if (!isMusicPlaying)
-            {
-                ResumeBackgroundMusic();
-            }
-            // Reproducir el sonido adicional en la tercera escena
+            // Reproducir la música principal desde el inicio en la tercera escena
+            PlayMusic(mainBackgroundMusic);
+
+            // Reproducir el sonido adicional (si es necesario)
             if (additionalBackgroundSound != null)
             {
                 backgroundMusicSource.clip = additionalBackgroundSound;
                 backgroundMusicSource.Play();
             }
         }
-        // Asegurarnos de que la música se reproduzca en la escena principal
-        else if (SceneManager.GetActiveScene().name == "MainMenu" && !isMusicPlaying)
+        else if (currentSceneName == "MainMenu")
         {
-            PlayBackgroundMusic();
+            // Asegurar que la música del menú principal se reproduce
+            PlayMusic(mainBackgroundMusic);
         }
-    }
-
-    // Para manejar los cambios de escena cuando el jugador le da al botón Play
-    public void OnPlayButtonClicked()
-    {
-        SceneManager.LoadScene("DemoLevel");
     }
 }
