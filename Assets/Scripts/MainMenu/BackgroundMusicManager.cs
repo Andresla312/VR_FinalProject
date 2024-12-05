@@ -66,12 +66,12 @@ public class BackgroundMusicManager : MonoBehaviour
     void OnLevelWasLoaded(int level)
     {
         // Detener música en la escena del videoclip
-        if (SceneManager.GetActiveScene().name == "VideoclipScene")
+        if (SceneManager.GetActiveScene().name == "Tutorial")
         {
             PauseBackgroundMusic();
         }
         // Reanudar la música en la tercera escena
-        else if (SceneManager.GetActiveScene().name == "ThirdScene")
+        else if (SceneManager.GetActiveScene().name == "DemoLevel")
         {
             if (!isMusicPlaying)
             {
@@ -92,8 +92,8 @@ public class BackgroundMusicManager : MonoBehaviour
     }
 
     // Para manejar los cambios de escena cuando el jugador le da al botón Play
-    public void OnPlayButtonClicked()
+    /*public void OnPlayButtonClicked()
     {
         SceneManager.LoadScene("DemoLevel");
-    }
+    }*/
 }

@@ -1,16 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private AudioSource buttonClickSound;
+    [SerializeField] private AudioSource buttonClickSound; 
     [SerializeField] private AudioClip buttonClickClip;
 
     public void PlayGame()
     {
-        Debug.Log("ya entree");
         PlayButtonClickSound();
         SceneManager.LoadScene("DemoLevel");
     }
@@ -20,6 +17,19 @@ public class MainMenu : MonoBehaviour
         PlayButtonClickSound();
         Debug.Log("Quit Game");
         Application.Quit();
+    }
+
+    void Update()
+    {
+        if (OVRInput.GetDown(OVRInput.Button.One))
+        {
+            PlayGame(); 
+        }
+
+        if (OVRInput.GetDown(OVRInput.Button.Two))
+        {
+            QuitGame();
+        }
     }
 
     private void PlayButtonClickSound()
