@@ -1,24 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private HealthBar healthBar;
-    [SerializeField] private float maxHealth = 100f;
-    private float currentHealth;
+    public static PlayerHealth instance;
+    public float maxHealth = 100f; // Salud máxima
+    public float currentHealth; // Salud actual
+    public Slider healthSlider; // Slider de la barra de vida
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        currentHealth = maxHealth;
+    }
 
     private void Start()
     {
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        UpdateHealthBar();
     }
 
+    // Función para recibir daño
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
         if (currentHealth < 0) currentHealth = 0;
+        UpdateHealthBar();
+    }
 
-        healthBar.SetHealth(currentHealth);
+    // Actualiza la barra de vida
+    private void UpdateHealthBar()
+    {
+        healthSlider.value = currentHealth / maxHealth;
     }
 }
