@@ -464,7 +464,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1ba88a38a1615064392c2bc6bcbb6b5c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1146
+      value: 1.2795999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1ba88a38a1615064392c2bc6bcbb6b5c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1528,7 +1528,6 @@ GameObject:
   m_Component:
   - component: {fileID: 583598042}
   - component: {fileID: 583598041}
-  - component: {fileID: 583598040}
   - component: {fileID: 583598043}
   m_Layer: 0
   m_Name: MasterEvent
@@ -1537,25 +1536,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &583598040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 583598039}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c73b97f5faade504880ed4196cbaa91c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioMixer: {fileID: 0}
-  diminishedVolume: -20
-  normalVolume: 0
-  headphonesA: {fileID: 0}
-  headphonesB: {fileID: 0}
-  playerHead: {fileID: 0}
-  wearDistance: 0.15
 --- !u!114 &583598041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2316,7 +2296,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9e511b055cf7d7440addd46abb3aa8be, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.145
+      value: 2.31
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9e511b055cf7d7440addd46abb3aa8be, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3626,7 +3606,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.07473755, y: 1.17}
+  m_AnchoredPosition: {x: 0.07473755, y: 2.335}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1678579820 stripped
@@ -4598,7 +4578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  rotationSpeed: 2
+  rotationSpeed: 0.5
   waypoints:
   - {fileID: 1097704097}
   - {fileID: 1777765674}
