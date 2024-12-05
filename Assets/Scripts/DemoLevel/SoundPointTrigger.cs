@@ -45,21 +45,31 @@ public class SoundPointTrigger : MonoBehaviour
     {
         while (isInRange)
         {
-            // Aquí comprobamos el color del sonido y aplicamos el daño
-            if (soundColor == "Green")
+            if (!HeadphoneInteractionHandler.isUsingHeadphones && !EarphonesInteractionHandler.isUsingEarphones)
             {
-                // Resta 10 hp por segundo si el sonido es amarillo
-                PlayerHealth.instance.TakeDamage(0 * Time.deltaTime);
+                // Sin protección de audífonos o earphones
+                if (soundColor == "Yellow")
+                {
+                    PlayerHealth.instance.TakeDamage(damageRate * Time.deltaTime);
+                }
+                else if (soundColor == "Red")
+                {
+                    PlayerHealth.instance.TakeDamage(damageRateRed * Time.deltaTime);
+                }
             }
-            if (soundColor == "Yellow")
+            else if (EarphonesInteractionHandler.isUsingEarphones)
             {
-                // Resta 10 hp por segundo si el sonido es amarillo
-                PlayerHealth.instance.TakeDamage(damageRate * Time.deltaTime);
-            }
-            else if (soundColor == "Red")
-            {
-                // Resta 20 hp por segundo si el sonido es rojo
-                PlayerHealth.instance.TakeDamage(damageRateRed * Time.deltaTime);
+                // Protección parcial con earphones
+                if (soundColor == "Yellow")
+                {
+                    // Sin daño por sonidos amarillos
+                    PlayerHealth.instance.TakeDamage(0);
+                }
+                else if (soundColor == "Red")
+                {
+                    // Mitigación de daño de sonidos rojos
+                    PlayerHealth.instance.TakeDamage((damageRateRed / 2) * Time.deltaTime);
+                }
             }
             yield return null;
         }

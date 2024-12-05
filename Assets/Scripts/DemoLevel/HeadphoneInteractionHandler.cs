@@ -9,6 +9,8 @@ public class HeadphoneInteractionHandler : MonoBehaviour
     [SerializeField]
     private BatteryManager batteryManager; // Referencia al BatteryManager
 
+    public static bool isUsingHeadphones; // Indica si los audífonos están en uso
+
     private void Awake()
     {
         if (rayInteractable == null)
@@ -40,11 +42,13 @@ public class HeadphoneInteractionHandler : MonoBehaviour
         {
             // Activar la funcionalidad al agarrar
             batteryManager.isPaused = false;
+            isUsingHeadphones = true;
         }
         else if (pointerEvent.Type == PointerEventType.Unselect)
         {
             // Desactivar la funcionalidad al soltar
             batteryManager.isPaused = true;
+            isUsingHeadphones = false;
         }
     }
 }

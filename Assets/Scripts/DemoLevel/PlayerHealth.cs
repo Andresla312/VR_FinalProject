@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -22,6 +23,11 @@ public class PlayerHealth : MonoBehaviour
         UpdateHealthBar();
     }
 
+    private void Update()
+    {
+        GameOver();
+    }
+
     // Función para recibir daño
     public void TakeDamage(float damage)
     {
@@ -34,5 +40,13 @@ public class PlayerHealth : MonoBehaviour
     private void UpdateHealthBar()
     {
         healthSlider.value = currentHealth / maxHealth;
+    }
+
+    private void GameOver()
+    {
+        if(healthSlider.value == 0)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
     }
 }

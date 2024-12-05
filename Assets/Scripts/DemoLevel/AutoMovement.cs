@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AutoMovement : MonoBehaviour
 {
@@ -46,6 +47,6 @@ public class AutoMovement : MonoBehaviour
 
     private void OnLevelFinished()
     {
-        Debug.Log("Nivel terminado. Mostrando resultados...");
+        SceneManager.LoadScene("Win");
     }
 }
