@@ -17,25 +17,65 @@ public class SoundManager : MonoBehaviour
     public GameObject wavePrefab;             // Prefab de la onda visual
 
     /// <summary>
-    /// Reproduce un sonido aleatorio de cualquier categoría en la posición especificada
-    /// y genera la esfera con la onda visual.
+    /// Reproduce un sonido de la categoría correspondiente al color
+    /// y genera la esfera y la onda visual con el mismo color.
     /// </summary>
     /// <param name="position">Posición en la que se reproducirá el sonido.</param>
-    public void PlayRandomSoundAt(Vector3 position)
+    /// <param name="soundColor">Color que determina la categoría de sonido.</param>
+    public void PlaySoundAtWithColor(Vector3 position, string soundColor)
     {
-        // Selecciona una categoría aleatoria
-        int categoryIndex = Random.Range(0, soundCategories.Length);
-        SoundCategory category = soundCategories[categoryIndex];
+        // Convierte el nombre del color a minúsculas para mayor flexibilidad
+        string colorName = soundColor.ToLower();
 
-        // Selecciona un sonido aleatorio de esa categoría
-        int soundIndex = Random.Range(0, category.sounds.Length);
-        AudioClip clip = category.sounds[soundIndex];
+        // Buscar la categoría de sonido correspondiente al color
+        SoundCategory category = null;
+        foreach (var cat in soundCategories)
+        {
+            if (cat.name.ToLower() == colorName)
+            {
+                category = cat;
+                break;
+            }
+        }
 
-        // Reproduce el sonido en la posición indicada
-        AudioSource.PlayClipAtPoint(clip, position);
+        if (category != null)
+        {
+            // Selecciona un sonido aleatorio de esa categoría
+            int soundIndex = Random.Range(0, category.sounds.Length);
+            AudioClip clip = category.sounds[soundIndex];
 
-        // Genera la esfera y la onda visual
-        GenerateSphereWithWave(position, category.color);
+            // Reproduce el sonido en la posición indicada
+            AudioSource.PlayClipAtPoint(clip, position);
+
+            // Genera la esfera y la onda visual
+            GenerateSphereWithWave(position, category.color);
+        }
+        else
+        {
+            Debug.LogError("No sound category found for the specified color: " + soundColor);
+        }
+    }
+
+
+    /// <summary>
+    /// Devuelve el color correspondiente a una cadena de texto.
+    /// </summary>
+    /// <param name="colorName">Nombre del color ("Yellow", "Red", etc.)</param>
+    /// <returns>Color correspondiente.</returns>
+    private Color GetColorFromString(string colorName)
+    {
+        switch (colorName.ToLower())  // Convertimos la cadena a minúsculas para mayor flexibilidad
+        {
+            case "yellow":
+                return Color.yellow;
+            case "red":
+                return Color.red;
+            case "green":
+                return Color.green;  // Agregado el caso para "green"
+            default:
+                Debug.LogError("Color no soportado: " + colorName);  // Añadimos un log si el color no es soportado
+                return Color.white; // Default color si no se encuentra el color
+        }
     }
 
     /// <summary>

@@ -6,14 +6,13 @@ public class SoundPointTrigger : MonoBehaviour
 {
     public float detectionRange = 5f; // Rango de detección
     public GameObject player; // Referencia al jugador
-    public string soundColor; // Puede ser "Yellow" o "Red"
+    public string soundColor; // Color del sonido (Yellow, Red, etc.)
     private bool isInRange = false;
 
     public float damageRate = 10f; // Daño por segundo para amarillo
     public float damageRateRed = 20f; // Daño por segundo para rojo
 
-    public GameObject soundSpherePrefab; // Prefab de la SoundSphere
-    public Transform soundSphereSpawnPoint; // Punto de aparición de la esfera
+    public SoundManager soundManager; // Referencia al SoundManager
 
     private void Update()
     {
@@ -24,9 +23,11 @@ public class SoundPointTrigger : MonoBehaviour
             if (!isInRange)
             {
                 isInRange = true;
+                // Llamar a la función del SoundManager usando el color y sonido correspondiente
+                soundManager.PlaySoundAtWithColor(transform.position, soundColor);
+
                 // Iniciar el daño si el sonido es amarillo o rojo
                 StartCoroutine(ApplyDamage());
-                SpawnSoundSphere();  // Llamar a la función para generar la esfera
             }
         }
         else
@@ -44,7 +45,13 @@ public class SoundPointTrigger : MonoBehaviour
     {
         while (isInRange)
         {
-            // Aquí compruebas el color del sonido
+            // Aquí comprobamos el color del sonido y aplicamos el daño
+            if (soundColor == "Green")
+            {
+                // Resta 10 hp por segundo si el sonido es amarillo
+                PlayerHealth.instance.TakeDamage(0 * Time.deltaTime);
+            }
+            // Aquí comprobamos el color del sonido y aplicamos el daño
             if (soundColor == "Yellow")
             {
                 // Resta 10 hp por segundo si el sonido es amarillo
@@ -58,24 +65,4 @@ public class SoundPointTrigger : MonoBehaviour
             yield return null;
         }
     }
-
-    // Función para generar la esfera de sonido
-    private void SpawnSoundSphere()
-    {
-        if (soundSpherePrefab != null && soundSphereSpawnPoint != null)
-        {
-            GameObject sphere = Instantiate(soundSpherePrefab, soundSphereSpawnPoint.position, Quaternion.identity);
-
-            // Aquí controlamos el color según el tipo de sonido
-            if (soundColor == "Yellow")
-            {
-                sphere.GetComponent<Renderer>().material.color = Color.yellow; // Cambiar a color amarillo
-            }
-            else if (soundColor == "Red")
-            {
-                sphere.GetComponent<Renderer>().material.color = Color.red; // Cambiar a color rojo
-            }
-        }
-    }
-
 }
