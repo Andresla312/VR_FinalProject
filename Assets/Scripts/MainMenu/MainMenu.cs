@@ -5,27 +5,27 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] private AudioSource buttonClickSound;
+    [SerializeField] private AudioClip buttonClickClip;
+
     public void PlayGame()
     {
+        PlayButtonClickSound();
         SceneManager.LoadScene("DemoLevel");
     }
 
     public void QuitGame()
     {
+        PlayButtonClickSound();
         Debug.Log("Quit Game");
         Application.Quit();
     }
 
-    void Update()
+    private void PlayButtonClickSound()
     {
-        if (OVRInput.GetDown(OVRInput.Button.One)) // Botón A
+        if (buttonClickSound != null && buttonClickClip != null)
         {
-            PlayGame();
-        }
-
-        if (OVRInput.GetDown(OVRInput.Button.Two)) // Botón B
-        {
-            QuitGame();
+            buttonClickSound.PlayOneShot(buttonClickClip);
         }
     }
 }
