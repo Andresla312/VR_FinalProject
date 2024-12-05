@@ -3,9 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class BackgroundMusicManager : MonoBehaviour
 {
-    [SerializeField] private AudioSource backgroundMusicSource; // Referencia al AudioSource de la música de fondo
-    [SerializeField] private AudioClip mainBackgroundMusic; // Canción de fondo principal
-    [SerializeField] private AudioClip additionalBackgroundSound; // Sonido adicional para la tercera escena
+    [SerializeField] private AudioSource mainBackgroundSource; // AudioSource para la música principal
+    [SerializeField] private AudioSource additionalSoundSource; // AudioSource para el sonido adicional
+    [SerializeField] private AudioClip mainBackgroundMusic; // Clip de la música principal
+    [SerializeField] private AudioClip additionalBackgroundSound; // Clip del sonido adicional
 
     private static BackgroundMusicManager instance;
 
@@ -18,57 +19,74 @@ public class BackgroundMusicManager : MonoBehaviour
             return;
         }
 
-        // Mantener el objeto entre escenas
         instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
     void Start()
     {
-        // Iniciar la música solo si estamos en la escena del menú principal
+        // Iniciar la música solo en la escena del menú principal
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
-            PlayMusic(mainBackgroundMusic);
+            PlayMainBackgroundMusic();
         }
     }
 
-    // Método para reproducir música desde el inicio
-    private void PlayMusic(AudioClip clip)
+    private void PlayMainBackgroundMusic()
     {
-        if (backgroundMusicSource != null)
+        if (mainBackgroundSource != null && mainBackgroundMusic != null)
         {
-            backgroundMusicSource.Stop(); // Detener cualquier música actual
-            backgroundMusicSource.clip = clip; // Asignar la nueva canción
-            backgroundMusicSource.Play(); // Reproducir desde el inicio
+            mainBackgroundSource.clip = mainBackgroundMusic;
+            mainBackgroundSource.loop = true; // Asegúrate de que la música sea continua
+            mainBackgroundSource.Play();
         }
     }
 
-    // Este método se llama al cargar una nueva escena
+    private void PauseMainBackgroundMusic()
+    {
+        if (mainBackgroundSource != null && mainBackgroundSource.isPlaying)
+        {
+            mainBackgroundSource.Pause();
+        }
+    }
+
+    private void ResumeMainBackgroundMusic()
+    {
+        if (mainBackgroundSource != null && !mainBackgroundSource.isPlaying)
+        {
+            mainBackgroundSource.Play();
+        }
+    }
+
+    private void PlayAdditionalSound()
+    {
+        if (additionalSoundSource != null && additionalBackgroundSound != null)
+        {
+            additionalSoundSource.clip = additionalBackgroundSound;
+            additionalSoundSource.loop = true; // Ajusta según prefieras
+            additionalSoundSource.Play();
+        }
+    }
+
     void OnLevelWasLoaded(int level)
     {
-        string currentSceneName = SceneManager.GetActiveScene().name;
+        string sceneName = SceneManager.GetActiveScene().name;
 
-        if (currentSceneName == "Tutorial")
+        if (sceneName == "Tutorial")
         {
-            // Detener la música durante la escena del videoclip
-            backgroundMusicSource.Stop();
+            PauseMainBackgroundMusic(); // Pausar música en la escena del videoclip
         }
-        else if (currentSceneName == "DemoLevel")
+        else if (sceneName == "DemoLevel")
         {
-            // Reproducir la música principal desde el inicio en la tercera escena
-            PlayMusic(mainBackgroundMusic);
-
-            // Reproducir el sonido adicional (si es necesario)
-            if (additionalBackgroundSound != null)
+            ResumeMainBackgroundMusic(); // Reanudar música principal
+            PlayAdditionalSound(); // Reproducir el sonido adicional
+        }
+        else if (sceneName == "MainMenu")
+        {
+            if (!mainBackgroundSource.isPlaying)
             {
-                backgroundMusicSource.clip = additionalBackgroundSound;
-                backgroundMusicSource.Play();
+                PlayMainBackgroundMusic();
             }
-        }
-        else if (currentSceneName == "MainMenu")
-        {
-            // Asegurar que la música del menú principal se reproduce
-            PlayMusic(mainBackgroundMusic);
         }
     }
 }
