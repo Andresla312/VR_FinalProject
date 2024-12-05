@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         PlayButtonClickSound();
-        SceneManager.LoadScene("DemoLevel");
+        SceneManager.LoadScene("Tutorial");
     }
 
     public void QuitGame()
