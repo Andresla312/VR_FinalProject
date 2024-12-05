@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BatteryManager : MonoBehaviour
 {
-    [Header("Battery Sprites")]
+    [Header("Battery Sprites")] //Sprites para cada estado de la batería
     public Sprite batteryFull;
     public Sprite batteryThreeQuarters;
     public Sprite batteryHalf;

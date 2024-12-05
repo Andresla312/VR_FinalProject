@@ -51,7 +51,6 @@ public class SoundPointTrigger : MonoBehaviour
                 // Resta 10 hp por segundo si el sonido es amarillo
                 PlayerHealth.instance.TakeDamage(0 * Time.deltaTime);
             }
-            // Aquí comprobamos el color del sonido y aplicamos el daño
             if (soundColor == "Yellow")
             {
                 // Resta 10 hp por segundo si el sonido es amarillo
