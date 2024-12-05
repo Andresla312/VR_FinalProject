@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
+        Debug.Log("ya entree");
         PlayButtonClickSound();
         SceneManager.LoadScene("DemoLevel");
     }
