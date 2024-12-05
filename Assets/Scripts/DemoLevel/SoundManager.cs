@@ -7,7 +7,7 @@ public class SoundManager : MonoBehaviour
     [System.Serializable]
     public class SoundCategory
     {
-        public string name;           // Nombre de la categoría (opcional, para organización)
+        public string name;           // Nombre de la categoría
         public AudioClip[] sounds;    // Lista de sonidos en esta categoría
         public Color color;           // Color asociado con esta categoría
     }
@@ -16,12 +16,6 @@ public class SoundManager : MonoBehaviour
     public GameObject spherePrefab;           // Prefab de la esfera visual
     public GameObject wavePrefab;             // Prefab de la onda visual
 
-    /// <summary>
-    /// Reproduce un sonido de la categoría correspondiente al color
-    /// y genera la esfera y la onda visual con el mismo color.
-    /// </summary>
-    /// <param name="position">Posición en la que se reproducirá el sonido.</param>
-    /// <param name="soundColor">Color que determina la categoría de sonido.</param>
     public void PlaySoundAtWithColor(Vector3 position, string soundColor)
     {
         // Convierte el nombre del color a minúsculas para mayor flexibilidad
@@ -56,12 +50,6 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-
-    /// <summary>
-    /// Devuelve el color correspondiente a una cadena de texto.
-    /// </summary>
-    /// <param name="colorName">Nombre del color ("Yellow", "Red", etc.)</param>
-    /// <returns>Color correspondiente.</returns>
     private Color GetColorFromString(string colorName)
     {
         switch (colorName.ToLower())  // Convertimos la cadena a minúsculas para mayor flexibilidad
@@ -71,18 +59,13 @@ public class SoundManager : MonoBehaviour
             case "red":
                 return Color.red;
             case "green":
-                return Color.green;  // Agregado el caso para "green"
+                return Color.green;
             default:
                 Debug.LogError("Color no soportado: " + colorName);  // Añadimos un log si el color no es soportado
                 return Color.white; // Default color si no se encuentra el color
         }
     }
 
-    /// <summary>
-    /// Genera una esfera y una onda visual en la posición especificada.
-    /// </summary>
-    /// <param name="position">Posición donde se generarán los efectos visuales.</param>
-    /// <param name="color">Color asociado a la categoría del sonido.</param>
     private void GenerateSphereWithWave(Vector3 position, Color color)
     {
         // Crear la esfera

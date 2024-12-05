@@ -12,7 +12,7 @@ public class AutoMovement : MonoBehaviour
 
     private void Update()
     {
-        // Si el nivel terminó, detén el movimiento
+        // Si el nivel terminó, se detiene el movimiento
         if (isLevelFinished || waypoints.Length == 0) return;
 
         // Movimiento hacia el waypoint actual
@@ -27,10 +27,10 @@ public class AutoMovement : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
-        // Verifica si llegó al waypoint
+        // Verificar si llegó al waypoint
         if (Vector3.Distance(transform.position, targetWaypoint.position) < 0.1f)
         {
-            // Si es el último waypoint, detenerse
+            // Si es el último waypoint, el jugadr se detiene
             if (currentWaypointIndex == waypoints.Length - 1)
             {
                 isLevelFinished = true;
@@ -47,6 +47,5 @@ public class AutoMovement : MonoBehaviour
     private void OnLevelFinished()
     {
         Debug.Log("Nivel terminado. Mostrando resultados...");
-        // Aquí puedes implementar la lógica para mostrar los resultados.
     }
 }
